@@ -1,3 +1,7 @@
-#fmap{
+﻿#fmap{
 	background: url(../images/firsovo.png) -2px 0px no-repeat;
+}
+
+#fmap path{
+	cursor: pointer;
 }

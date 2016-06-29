@@ -3,7 +3,7 @@
     var r = Raphael('fmap', 730, 384),
       // создаём холст, на котором рисуются наши контуры
       attributes = {
-        fill: 'rgba(252, 240, 116, 0)',
+        fill: 'rgba(252, 240, 116, 0.7)',
         stroke: '#3899E6',
         'stroke-width': 1,
         'stroke-linejoin': 'round'
@@ -15,7 +15,7 @@
           obj.attr(attributes);
           obj.hover(function(){
               this.animate({
-                fill: 'rgba(255, 255, 255, 0.5)',
+                fill: 'rgba(255, 255, 255, 0.7)',
               }, 300);
             }, function(){
               this.animate({
