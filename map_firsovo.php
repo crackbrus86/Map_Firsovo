@@ -14,12 +14,12 @@ add_action( 'admin_init', array('MapFirsovo', 'InitDB'));
 
 //Map shortcode
 function build_map_f(){
+	require_once($fpath."/get_paths.php");
+	
 	wp_register_style('style_map_f', plugins_url( '/css/firsovo.css', __FILE__ ));
     wp_enqueue_style( 'style_map_f'); 	
 	wp_register_script( 'raphael_f', plugins_url( '/js/raphael.js', __FILE__ ) );
 	wp_enqueue_script(  'raphael_f');
-	wp_register_script( 'path_f', plugins_url( '/js/path.js', __FILE__ ) );
-	wp_enqueue_script(  'path_f');
 	wp_register_script( 'init_f', plugins_url( '/js/init.js', __FILE__ ) );
 	wp_enqueue_script(  'init_f');	
 
