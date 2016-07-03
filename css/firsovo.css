@@ -5,3 +5,33 @@
 #fmap path{
 	cursor: pointer;
 }
+
+.point {
+	position:absolute;
+  	display:none;
+  	padding:10px 15px;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 3px 3px 10px 0px #1d1c1c;
+    color: #585858;
+  	font-size:14px;
+  	font-weight:bold;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+}
+     
+.point .fa-times-circle {
+    display: block;
+    position: absolute;
+    top: 3px;
+    right: -9px;
+    width: 24px;
+    height: 24px;
+    color: rgba(255,18,18,0.5);
+    text-decoration: none;
+    border: none;
+    box-shadow: none;
+}
+.point .fa-times-circle:hover{
+    color: rgba(255,18,18,0.8);	
+}
