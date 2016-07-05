@@ -6,7 +6,8 @@
 	cursor: pointer;
 }
 
-.point {
+.point,
+.point-edit {
 	position:absolute;
   	display:none;
   	padding:10px 15px;
@@ -20,7 +21,8 @@
 	border-radius:8px;
 }
      
-.point .fa-times-circle {
+.point .fa-times-circle,
+.point-edit .fa-times-circle  {
     display: block;
     position: absolute;
     top: 3px;
@@ -32,6 +34,8 @@
     border: none;
     box-shadow: none;
 }
-.point .fa-times-circle:hover{
+.point .fa-times-circle:hover,
+.point-edit .fa-times-circle:hover
+{
     color: rgba(255,18,18,0.8);	
 }

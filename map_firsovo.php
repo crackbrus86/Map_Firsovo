@@ -22,8 +22,12 @@ function build_map_f(){
 	wp_register_script( 'raphael_f', plugins_url( '/js/raphael.js', __FILE__ ) );
 	wp_enqueue_script(  'raphael_f');
 	wp_register_script( 'init_f', plugins_url( '/js/init.js', __FILE__ ) );
-	wp_enqueue_script(  'init_f');	
-
+	wp_enqueue_script(  'init_f');
+		
+	if( current_user_can('edit_others_pages') ) { 
+		if($_GET['editor_map']==true) echo '<a href="./">Выйти из режима редактирования</a>';
+		else echo '<a href="?editor_map=true">Редактировать карту</a>';
+	}
 	echo '<div id="fmap"></div>';
 }
 
