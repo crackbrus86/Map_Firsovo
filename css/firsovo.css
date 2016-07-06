@@ -39,3 +39,84 @@
 {
     color: rgba(255,18,18,0.8);	
 }
+
+.point-edit .modal-title{
+    font-family: Verdana, Helvetica, sans-serif;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    font-weight: 600;    
+    color: #585858;
+	margin-bottom: 1em;    
+}
+.point-edit form p{
+	margin-bottom: 0.7em;
+}
+.point-edit form p label{
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size: 1em;
+    font-weight: 400;
+    color: #585858;    	
+}
+.point-edit form p input[type="text"]{
+	width: 100%;
+	padding: 0.625em 0.4375em;
+	background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size: 0.9em;
+    font-weight: 400;
+    color: #585858;      
+}
+
+.point-edit form p select{
+    width: 100%;
+    height: 2.4375rem;
+    padding: .5rem;
+    margin: 0 0 1rem;
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size: 0.9em;
+    font-weight: 400;
+    line-height: normal;
+    color: #585858;
+    background-color: #fefefe;
+    border-radius: 8px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('../images/arrow.png');
+    background-size: 15px 10px;
+    background-position: right center;
+    background-origin: content-box;
+    background-repeat: no-repeat;
+    border-color: #ddd;	
+}
+
+.point-edit .path-save,
+.point-edit .path-cancel{
+    display: block;
+    font-size: 1.8em;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    padding: 5px 0 0 9px;
+    margin: 0 14%;
+    text-shadow: 0px 0px 1px #000;
+    box-shadow: 0 0 5px 0px #000;
+    background-color: rgba(10, 142, 38, 1);
+    opacity: 0.5;
+    cursor: pointer;
+    float: left;	
+}
+.point-edit .path-cancel{
+	background-color: rgb(241, 90, 90);
+}
+
+.point-edit .path-save:hover,
+.point-edit .path-cancel:hover{
+	opacity: 0.8;
+}

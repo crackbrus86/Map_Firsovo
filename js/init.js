@@ -92,36 +92,90 @@
           });
           return false;
     });
+  }
+
+
+function handleUpdate(modal, button){
+  $(modal).find(button).live('click', function(){
+    updatePath();
+  });
+}
+
+  function updatePath(){
+    var form = $( ".point-edit form" ).serialize();
+    $('.point-edit').remove();
+    $.ajax({
+       type: "POST",
+       url: dir + "/set_path.php",
+       data: form,
+       success: function(data){
+        if(data === "true") alert( "Участок обновлен!");
+        window.location.reload();
+        // console.log(data);
+       }
+     });
   }  
 
   $(document).ready(function(){
-    //close edit modal
-    closeModal('.point-edit', '.close-edit');
     //get array with GET parameters
     var getArr = parseGetParams();
     //check user permission, disable standart right click
     $.get(dir + "/get_permissions.php", getArr, function(data){
       if(data == 'true'){
+
         document.oncontextmenu = function() {return false;};
         //handle right click on path
         $(document).mousedown(function(event) {
           if (event.which === 3 && event.target.nodeName === 'path')  {
             var target = event.target.id;
+            $.get(dir + "/get_path.php", "euid=" + target, function(dat){
+                var pathData = $.parseJSON(dat) ;
+
             var leftX = event.offsetX - 20;
             var topY = event.offsetY + 30;
             $('.point-edit').remove();
             $('.point').remove();
             $('#fmap').after($('<div />').addClass('point-edit'));
             $('.point-edit')
-            .html('Edit ' + target)
+            .html('<p class="modal-title">Редактировать участок</p>')
             .prepend($('<a />').attr('href', '#').addClass('close-edit').addClass('fa').addClass('fa-times-circle'))
+            .append($('<form />')
+              .append('<p><label for="m-path-name">Название участка:</label></p>')
+              .append('<p><input type="text" id="m-path-name" name="m-path-name" value="'+pathData[0].element_name+'" /></p>')
+              .append('<p><label for="m-path-square">Площадь участка:</label></p>')
+              .append('<p><input type="text" id="m-path-square" name="m-path-square" value="" /></p>')
+              .append('<p><label for="m-path-cost">Стоимость участка:</label></p>')
+              .append('<p><input type="text" id="m-path-cost" name="m-path-cost" value="" /></p>')  
+              .append('<p><label for="m-path-new-cost">Новая цена:</label></p>')
+              .append('<p><input type="text" id="m-path-new-cost" name="m-path-new-cost" value="" /></p>')  
+              .append('<p><label for="m-path-status">Статус:</label></p>')
+              .append('<p><select id="m-path-status" name="m-path-status">'+'<option value="none" selected>Без статуса</option>'+
+                '<option value="busy">Занят</option>'+
+                '<option value="reserved">Забронирован</option>'+
+                '<option value="free">Свободный</option>'+
+                '<option value="discount">Акция</option>'+
+                '</select></p>')
+              .append('<p><label for="m-path-cn">Кадастровый номер:</label></p>')
+              .append('<p><input type="text" id="m-path-cn" name="m-path-cn" value="" /></p>')   
+              .append('<p><input type="hidden" id="m-path-id" name="m-path-id" value="' + target + '" /></p>')   
+            )
+              .append('<span class="path-save fa fa-floppy-o" title="Сохранить" />') 
+              .append('<span class="path-cancel fa fa-times" title="Отмена" />')             
             .css({
               left: leftX+'px',
               top: topY+'px'
             })
-            .fadeIn();              
+            .fadeIn();   
+
+            });
+
+
+             //close edit modal
+            closeModal('.point-edit', '.close-edit');
+            closeModal('.point-edit', '.path-cancel');
           }
         });
+        handleUpdate('.point-edit', '.path-save');
       }
     });
   });
