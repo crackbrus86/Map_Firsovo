@@ -40,7 +40,7 @@
         $('#fmap').next('.point').remove();
         $('#fmap').after($('<div />').addClass('point'));
         $('.point')
-          .html(paths[this.id].element_uid)
+          .html(paths[this.id].element_name)
           .css({
             left: point.x,
             top: point.y + 70,
@@ -59,8 +59,11 @@
         $('#fmap').next('.point').remove();
         $('#fmap').after($('<div />').addClass('point'));
         $('.point')
-          .html(paths[this.id].element_uid)
+          .html('<p class="path-title">'+paths[this.id].element_name+'</p>')
           .prepend($('<a />').attr('href', '#').addClass('close').addClass('fa').addClass('fa-times-circle'))
+          .append(checkStatus(paths[this.id].element_status))
+          .append(checkSquare(paths[this.id].element_place))
+          .append(checkCadasterNumber(paths[this.id].element_cadaster_number))
           .css({
             left: point.x,
             top: point.y + 80
@@ -81,6 +84,44 @@
         $_GET[getVar[0]] = typeof(getVar[1])=="undefined" ? "" : getVar[1]; 
      } 
      return $_GET; 
+  }
+
+  function checkStatus(status){
+    var status_label;
+    switch (status){
+      case 'none':
+        status_label = 'Вторая очередь';
+        break
+      case 'free':
+        status_label = 'Свободен';
+        break
+      case 'busy':
+        status_label = 'Занят';
+        break
+      case 'reserved':
+        status_label = 'Забронирован';
+        break
+      case 'discount':
+        status_label = 'Акция';
+        break
+      default:
+        status_label = 'Вторая очередь';
+        break
+    }
+    var str = '<p class="path-status">'+status_label+'</p>';
+    return str;
+  }
+
+  function checkSquare(square){
+    var str = '<p class="path-square">Площадь '+square+'</p>';
+    if(square > 0 || square !== '')
+      return str;
+  }
+
+  function checkCadasterNumber(cadaster_number){
+    var str = '<p class="cn-pre">Смотреть на кадастровой карте</p><p class="path-cn">'+cadaster_number+'</p>';
+    if(cadaster_number !== '')
+      return str;
   }
 
   function closeModal(modal, button){
@@ -143,11 +184,11 @@ function handleUpdate(modal, button){
               .append('<p><label for="m-path-name">Название участка:</label></p>')
               .append('<p><input type="text" id="m-path-name" name="m-path-name" value="'+pathData[0].element_name+'" /></p>')
               .append('<p><label for="m-path-square">Площадь участка:</label></p>')
-              .append('<p><input type="text" id="m-path-square" name="m-path-square" value="" /></p>')
+              .append('<p><input type="text" id="m-path-square" name="m-path-square" value="'+pathData[0].element_place+'" /></p>')
               .append('<p><label for="m-path-cost">Стоимость участка:</label></p>')
-              .append('<p><input type="text" id="m-path-cost" name="m-path-cost" value="" /></p>')  
+              .append('<p><input type="text" id="m-path-cost" name="m-path-cost" value="'+pathData[0].element_price+'" /></p>')  
               .append('<p><label for="m-path-new-cost">Новая цена:</label></p>')
-              .append('<p><input type="text" id="m-path-new-cost" name="m-path-new-cost" value="" /></p>')  
+              .append('<p><input type="text" id="m-path-new-cost" name="m-path-new-cost" value="'+pathData[0].element_price_new+'" /></p>')  
               .append('<p><label for="m-path-status">Статус:</label></p>')
               .append('<p><select id="m-path-status" name="m-path-status">'+'<option value="none" selected>Без статуса</option>'+
                 '<option value="busy">Занят</option>'+
@@ -156,7 +197,7 @@ function handleUpdate(modal, button){
                 '<option value="discount">Акция</option>'+
                 '</select></p>')
               .append('<p><label for="m-path-cn">Кадастровый номер:</label></p>')
-              .append('<p><input type="text" id="m-path-cn" name="m-path-cn" value="" /></p>')   
+              .append('<p><input type="text" id="m-path-cn" name="m-path-cn" value="'+pathData[0].element_cadaster_number+'" /></p>')   
               .append('<p><input type="hidden" id="m-path-id" name="m-path-id" value="' + target + '" /></p>')   
             )
               .append('<span class="path-save fa fa-floppy-o" title="Сохранить" />') 
@@ -166,6 +207,12 @@ function handleUpdate(modal, button){
               top: topY+'px'
             })
             .fadeIn();   
+            //check path status
+            if(!pathData[0].element_status || pathData[0].element_status === 'none'){
+              $("#m-path-status option[value='none']").attr("selected","selected");
+            }else{
+              $("#m-path-status option[value='"+pathData[0].element_status+"']").attr("selected","selected");
+            }            
 
             });
 

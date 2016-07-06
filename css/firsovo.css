@@ -20,7 +20,11 @@
 	-webkit-border-radius:8px;
 	border-radius:8px;
 }
-     
+
+.point-edit{
+    min-width: 225px; 	
+}   
+
 .point .fa-times-circle,
 .point-edit .fa-times-circle  {
     display: block;
@@ -119,4 +123,25 @@
 .point-edit .path-save:hover,
 .point-edit .path-cancel:hover{
 	opacity: 0.8;
+}
+
+
+.point p{
+    font-family: Verdana, Helvetica, sans-serif;
+    color: #585858; 
+    margin: 0 0 0 0.5em; 
+	font-weight: 400;
+    font-size: 1em;	          	
+}
+.point .path-title{
+    text-align: center;
+    font-size: 1.4em;   
+}
+.point .path-status{
+    text-align: center;
+    font-size: 1.2em;  
+    text-transform: uppercase;
+}
+.point .cn-pre{
+	border-bottom: 1px solid #585858;
 }
