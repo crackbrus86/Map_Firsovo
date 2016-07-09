@@ -11,7 +11,7 @@ $fpath = trailingslashit(dirname(__FILE__));
 //Activation of the page for plugin settings
 add_action('admin_menu', array('MapFirsovo', 'MapSettingsInit'));
 add_action( 'admin_init', array('MapFirsovo', 'InitDB'));
-
+	
 //Map shortcode
 function build_map_f(){
 	
@@ -21,6 +21,8 @@ function build_map_f(){
     wp_enqueue_style( 'font-awesome-f'); 	    	
 	wp_register_script( 'raphael_f', plugins_url( '/js/raphael.js', __FILE__ ) );
 	wp_enqueue_script(  'raphael_f');
+	// wp_register_script( 'imageupload_f', plugins_url( '/js/imageupload.js', __FILE__ ) );
+	// wp_enqueue_script(  'imageupload_f');	
 	wp_register_script( 'init_f', plugins_url( '/js/init.js', __FILE__ ) );
 	wp_enqueue_script(  'init_f');
 		

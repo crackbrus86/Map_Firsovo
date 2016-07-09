@@ -1,14 +1,6 @@
 ﻿(function($, undefined){
   var dir = "../wp-content/plugins/map_firsovo/";
   var r = Raphael('fmap', 730, 384),
-  // create canvas of interactive map
-  // attributes = {
-  //   fill: 'rgba(252, 240, 116, 0.7)',
-  //   stroke: '#3899E6',
-  //   'stroke-width': 1,
-  //   'stroke-linejoin': 'round'
-  // },
-     
   // create object 'attributes' with parameters
   arr = new Array();
 
@@ -198,7 +190,7 @@
 
 function handleUpdate(modal, button){
   $(modal).find(button).live('click', function(){
-    updatePath();
+    uploadImage();
   });
 }
 
@@ -212,10 +204,58 @@ function handleUpdate(modal, button){
        success: function(data){
         if(data === "true") alert( "Участок обновлен!");
         window.location.reload();
-        // console.log(data);
        }
      });
-  }  
+  }
+
+  function uploadImage(){
+        var that = $('.point-edit form');    
+        if($('input').is('#m-path-photo')){
+          var files = that[0][8].files;
+          var fData = new FormData(that);
+          if(files.length > 0){
+            $.each( files, function( key, value ){  
+                fData.append( key, value );
+            });            
+          } 
+          $.ajax({
+            url: dir + "/upload_photo.php",
+            type: "POST",
+            contentType: false,
+            processData: false,
+            data: fData,
+            success: function(data){
+              var img_id = data.replace(/\s+/g, '');
+              if(img_id !== ''){
+                $("#m-path-picture-id").val(img_id);
+              }
+              updatePath();
+            }
+          });        
+      }else{
+        updatePath();
+      }
+
+  }
+
+  function PictureRemove(){
+    $("#m-path-picture-id").val(0);
+    $('.pic-controls').html('<p><input type="file" name="m-path-photo" id="m-path-photo" /></p>');
+
+  }
+
+  function PhotoForm(photo_num){
+    var str;
+    if(photo_num == "0"){
+      str = '<p><input type="file" name="m-path-photo" id="m-path-photo" /></p>'
+    }else{
+      str = '<div class="pic-controls">';
+      str += '<span class="remove-pic fa fa-trash">Удалить</span>';
+      str += '<span class="show-pic fa fa-file-image-o">Открыть</span>';
+      str += '</div>';
+    }
+    return str;
+  } 
 
   $(document).ready(function(){
     //get array with GET parameters
@@ -240,7 +280,7 @@ function handleUpdate(modal, button){
             $('.point-edit')
             .html('<p class="modal-title">Редактировать участок</p>')
             .prepend($('<a />').attr('href', '#').addClass('close-edit').addClass('fa').addClass('fa-times-circle'))
-            .append($('<form />')
+            .append($('<form method="post" enctype="multipart/form-data" />')
               .append('<p><label for="m-path-name">Название участка:</label></p>')
               .append('<p><input type="text" id="m-path-name" name="m-path-name" value="'+pathData[0].element_name+'" /></p>')
               .append('<p><label for="m-path-square">Площадь участка:</label></p>')
@@ -258,8 +298,11 @@ function handleUpdate(modal, button){
                 '</select></p>')
               .append('<p><label for="m-path-cn">Кадастровый номер:</label></p>')
               .append('<p><input type="text" id="m-path-cn" name="m-path-cn" value="'+pathData[0].element_cadaster_number+'" /></p>')   
-              .append('<p><input type="hidden" id="m-path-id" name="m-path-id" value="' + target + '" /></p>')   
+              .append('<p><input type="hidden" id="m-path-id" name="m-path-id" value="' + target + '" /></p>')
+              .append('<p><input type="hidden" id="m-path-picture-id" name="m-path-picture-id" value="' + pathData[0].element_photo + '" /></p>')
+              .append('<p><label for="m-path-photo">Фото:</label></p>' + PhotoForm(pathData[0].element_photo))   
             )
+
               .append('<span class="path-save fa fa-floppy-o" title="Сохранить" />') 
               .append('<span class="path-cancel fa fa-times" title="Отмена" />')             
             .css({
@@ -275,14 +318,15 @@ function handleUpdate(modal, button){
             }            
 
             });
-
-
              //close edit modal
             closeModal('.point-edit', '.close-edit');
             closeModal('.point-edit', '.path-cancel');
           }
         });
         handleUpdate('.point-edit', '.path-save');
+        $('.point-edit').find('.remove-pic').live('click', function(){
+          PictureRemove();
+        });
       }
     });
   });
