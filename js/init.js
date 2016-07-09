@@ -2,14 +2,17 @@
   var dir = "../wp-content/plugins/map_firsovo/";
   var r = Raphael('fmap', 730, 384),
   // create canvas of interactive map
-  attributes = {
-    fill: 'rgba(252, 240, 116, 0.7)',
-    stroke: '#3899E6',
-    'stroke-width': 1,
-    'stroke-linejoin': 'round'
-  },       
+  // attributes = {
+  //   fill: 'rgba(252, 240, 116, 0.7)',
+  //   stroke: '#3899E6',
+  //   'stroke-width': 1,
+  //   'stroke-linejoin': 'round'
+  // },
+     
   // create object 'attributes' with parameters
   arr = new Array();
+
+
 
   //wait for request for paths and build polyhons with functionality
   $.when($.ajax( dir + "/get_paths.php")).done(function( data ) {
@@ -20,6 +23,7 @@
     // loop all paths from appropriate object, show they and add parameters 
     for (var country in paths) {
       var obj = r.path(paths[country].d);
+      var  attributes = SetAttributes(paths[country].element_status);
       obj.attr(attributes);
       arr[obj.id] = country;
       obj.node.id = paths[country].element_uid;
@@ -30,8 +34,9 @@
           fill: 'rgba(255, 255, 255, 0.7)',
         }, 300);
       }, function(){
+          var a = paths[this.id].element_status;
           this.animate({
-            fill: attributes.fill
+            fill: SetAttributes(a).fill,
           }, 300);
         })
       //show tool type with title
@@ -76,6 +81,60 @@
    
   });
 
+  function SetAttributes(status){
+    switch (status){
+      case 'none':
+      attributes = {
+        fill: 'rgba(95, 95, 95, 0.7)',
+        stroke: '#647b4f',
+        'stroke-width': 1,
+        'stroke-linejoin': 'round'
+      };
+      break
+      case 'free':
+        attributes = {
+          fill: 'rgba(131, 212, 122, 0.7)',
+          stroke: '#3899E6',
+          'stroke-width': 1,
+          'stroke-linejoin': 'round'
+        };
+        break
+      case 'reserved':
+        attributes = {
+          fill: 'rgba(247, 62, 253, 0.7)',
+          stroke: '#3899E6',
+          'stroke-width': 1,
+          'stroke-linejoin': 'round'
+        };
+        break        
+      case 'busy':
+        attributes = {
+          fill: 'rgba(239, 127, 26, 0.7)',
+          stroke: '#3899E6',
+          'stroke-width': 1,
+          'stroke-linejoin': 'round'
+        };
+        break    
+      case 'discount':
+        attributes = {
+          fill: 'rgba(249, 0, 0, 0.7)',
+          stroke: '#3899E6',
+          'stroke-width': 1,
+          'stroke-linejoin': 'round'
+        };
+        break                
+      default:
+        attributes = {
+          fill: 'rgba(95, 95, 95, 0.7)',
+          stroke: '#647b4f',
+          'stroke-width': 1,
+          'stroke-linejoin': 'round'
+        };
+        break             
+    }
+    return attributes;
+  }
+
   function parseGetParams() { 
      var $_GET = {}; 
      var __GET = window.location.search.substring(1).split("&"); 
@@ -85,6 +144,7 @@
      } 
      return $_GET; 
   }
+
 
   function checkStatus(status){
     var status_label;
