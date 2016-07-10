@@ -96,7 +96,7 @@
       break
       case 'free':
         attributes = {
-          fill: 'rgba(131, 212, 122, 0.7)',
+          fill: 'rgba(131, 212, 122, 0.4)',
           stroke: '#3899E6',
           'stroke-width': 1,
           'stroke-linejoin': 'round'
@@ -104,7 +104,7 @@
         break
       case 'reserved':
         attributes = {
-          fill: 'rgba(247, 62, 253, 0.7)',
+          fill: 'rgba(247, 62, 253, 0.4)',
           stroke: '#3899E6',
           'stroke-width': 1,
           'stroke-linejoin': 'round'
@@ -112,7 +112,7 @@
         break        
       case 'busy':
         attributes = {
-          fill: 'rgba(239, 127, 26, 0.7)',
+          fill: 'rgba(239, 113, 0, 0.4)',
           stroke: '#3899E6',
           'stroke-width': 1,
           'stroke-linejoin': 'round'
@@ -120,7 +120,7 @@
         break    
       case 'discount':
         attributes = {
-          fill: 'rgba(249, 0, 0, 0.7)',
+          fill: 'rgba(249, 0, 0, 0.4)',
           stroke: '#3899E6',
           'stroke-width': 1,
           'stroke-linejoin': 'round'
@@ -154,24 +154,30 @@
     switch (status){
       case 'none':
         status_label = 'Вторая очередь';
+        status_color = 'colorNone';
         break
       case 'free':
         status_label = 'Свободен';
+        status_color = 'colorFree';
         break
       case 'busy':
         status_label = 'Занят';
+        status_color = 'colorBusy';
         break
       case 'reserved':
         status_label = 'Забронирован';
+        status_color = 'colorReserved';
         break
       case 'discount':
         status_label = 'Акция';
+        status_color = 'colorDiscount';
         break
       default:
         status_label = 'Вторая очередь';
+        status_color = 'colorNone';
         break
     }
-    var str = '<p class="path-status">'+status_label+'</p>';
+    var str = '<p class="path-status '+status_color+'">'+status_label+'</p>';
     return str;
   }
 
@@ -269,6 +275,8 @@ function handleUpdate(modal, button){
       $('.point-pic').html('<p>'+ data +'</p>')
       .prepend($('<a />').attr('href', '#').addClass('close').addClass('fa').addClass('fa-times-circle'))
       .fadeIn();
+      var  targetTop = $('.point-pic').offset().top;
+      $('html, body').animate({scrollTop:targetTop}, 'slow');
     });
   }
 
