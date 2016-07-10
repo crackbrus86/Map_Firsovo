@@ -4,7 +4,7 @@
   // create object 'attributes' with parameters
   arr = new Array();
 
-
+  ShowPreloader();
 
   //wait for request for paths and build polyhons with functionality
   $.when($.ajax( dir + "/get_paths.php")).done(function( data ) {
@@ -61,6 +61,7 @@
           .append(checkStatus(paths[this.id].element_status))
           .append(checkSquare(paths[this.id].element_place))
           .append(checkCadasterNumber(paths[this.id].element_cadaster_number))
+          .append(HasPhoto(paths[this.id].element_photo))
           .css({
             left: point.x,
             top: point.y + 80
@@ -70,8 +71,18 @@
       //close modal
       closeModal('.point', '.close');
     }
-   
+    HidePreloader();
   });
+
+  function HasPhoto(photo_id){
+    if(photo_id != 0){
+        var str = '<p><input type="hidden" name="m-path-picture-id" id="m-path-picture-id" value="'+photo_id+'" /></p>';
+        str += "<p><span id='show-picture' class='fa fa-picture-o'><i>Показать фото</i></span></p>";
+        return str;
+    }else{
+        return;
+    }
+  }
 
   function SetAttributes(status){
     switch (status){
@@ -239,9 +250,39 @@ function handleUpdate(modal, button){
   }
 
   function PictureRemove(){
-    $("#m-path-picture-id").val(0);
-    $('.pic-controls').html('<p><input type="file" name="m-path-photo" id="m-path-photo" /></p>');
+    if(confirm("Вы уверены что хотите удалить это фото?")){
+      $("#m-path-picture-id").val(0);
+      $('.pic-controls').html('<p><input type="file" name="m-path-photo" id="m-path-photo" /></p>');
+      return;
+    }else{
+      return;
+    }
+  }
 
+  function ShowPicture(){
+    var photoId = $("#m-path-picture-id").val();
+    // console.log(photoId);
+    $.get(dir + '/get_photo.php', 'photoId=' + photoId, function(data){
+      $('#fmap').next('.point-pic').remove();
+      $('#fmap').after($('<div />').addClass('point-pic'));
+      $('.point-pic').addClass('show_photo_wrap');
+      $('.point-pic').html('<p>'+ data +'</p>')
+      .prepend($('<a />').attr('href', '#').addClass('close').addClass('fa').addClass('fa-times-circle'))
+      .fadeIn();
+    });
+  }
+
+  function ShowPreloader(){
+    var m = $('#fmap').offset();
+
+    $('#fmap').next('.blockout').remove();
+    $('#fmap').after($('<div />').addClass('blockout'));
+    $('.blockout').html('<span class="fa-spin fa fa-circle-o-notch"></span>')
+    .fadeIn();
+  }
+  function HidePreloader(){
+    $('.blockout').fadeOut();
+    $('.blockout').remove();
   }
 
   function PhotoForm(photo_num){
@@ -250,14 +291,18 @@ function handleUpdate(modal, button){
       str = '<p><input type="file" name="m-path-photo" id="m-path-photo" /></p>'
     }else{
       str = '<div class="pic-controls">';
-      str += '<span class="remove-pic fa fa-trash">Удалить</span>';
-      str += '<span class="show-pic fa fa-file-image-o">Открыть</span>';
+      str += '<span class="show-pic fa fa-file-image-o"><i>Открыть</i></span>';      
+      str += '<span class="remove-pic fa fa-trash"><i>Удалить</i></span>';
       str += '</div>';
     }
     return str;
   } 
 
   $(document).ready(function(){
+    $('.point').find('#show-picture').live('click', function(){
+      ShowPicture();
+    }); 
+    closeModal('.point-pic', '.close');  
     //get array with GET parameters
     var getArr = parseGetParams();
     //check user permission, disable standart right click
@@ -269,6 +314,7 @@ function handleUpdate(modal, button){
         $(document).mousedown(function(event) {
           if (event.which === 3 && event.target.nodeName === 'path')  {
             var target = event.target.id;
+            ShowPreloader();
             $.get(dir + "/get_path.php", "euid=" + target, function(dat){
                 var pathData = $.parseJSON(dat) ;
 
@@ -309,7 +355,8 @@ function handleUpdate(modal, button){
               left: leftX+'px',
               top: topY+'px'
             })
-            .fadeIn();   
+            .fadeIn();  
+            HidePreloader(); 
             //check path status
             if(!pathData[0].element_status || pathData[0].element_status === 'none'){
               $("#m-path-status option[value='none']").attr("selected","selected");
@@ -327,6 +374,9 @@ function handleUpdate(modal, button){
         $('.point-edit').find('.remove-pic').live('click', function(){
           PictureRemove();
         });
+        $('.point-edit').find('.show-pic').live('click', function(){
+          ShowPicture();
+        });        
       }
     });
   });

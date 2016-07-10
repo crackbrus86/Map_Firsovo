@@ -7,7 +7,8 @@
 }
 
 .point,
-.point-edit {
+.point-edit,
+.point-pic {
 	position:absolute;
   	display:none;
   	padding:10px 15px;
@@ -26,7 +27,8 @@
 }   
 
 .point .fa-times-circle,
-.point-edit .fa-times-circle  {
+.point-edit .fa-times-circle,
+.point-pic .fa-times-circle  {
     display: block;
     position: absolute;
     top: 3px;
@@ -39,7 +41,8 @@
     box-shadow: none;
 }
 .point .fa-times-circle:hover,
-.point-edit .fa-times-circle:hover
+.point-edit .fa-times-circle:hover,
+ .point-pic .fa-times-circle:hover
 {
     color: rgba(255,18,18,0.8);	
 }
@@ -126,22 +129,107 @@
 }
 
 
-.point p{
+.point p,
+.point-pic p{
     font-family: Verdana, Helvetica, sans-serif;
     color: #585858; 
     margin: 0 0 0 0.5em; 
 	font-weight: 400;
     font-size: 1em;	          	
 }
-.point .path-title{
+.point .path-title,
+.point-pic .path-title{
     text-align: center;
     font-size: 1.4em;   
 }
-.point .path-status{
+.point .path-status,
+.point-pic .path-status{
     text-align: center;
     font-size: 1.2em;  
     text-transform: uppercase;
 }
 .point .cn-pre{
 	border-bottom: 1px solid #585858;
+}
+.show_photo_wrap{
+    width: 86.666667%;
+    padding: 15px;
+    padding-left: 8px;
+    margin-top: -50%;
+    z-index: 20;
+}
+
+.pic-controls span{
+	display: block;
+    float: left;
+    border: 1px solid #6d6666;
+    margin: 0 3px;
+    padding: 4px;
+    border-radius: 8px;
+    min-width: 45%;
+    margin-bottom: 10px;
+    background: linear-gradient(0deg,#d80e0e 0% ,#fdf2f2 100%);
+    color: #fff;
+    text-shadow: 0 0 1px #000;
+    box-shadow: 1px 2px 5px -1px #353434;
+    font-size: 1em;	
+    cursor: pointer;
+    opacity: 0.7;      	
+    transition: all 1s ease 0s;
+}
+.pic-controls span i{
+    font-style: normal;
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size: 0.95em;
+}
+.pic-controls .fa-trash:before,
+.pic-controls .fa-file-image-o:before{
+	margin-right: 6px;
+}
+.pic-controls .show-pic{
+	background: linear-gradient(0deg, #03560d 0%, #f6f7f6 100%);
+}
+.pic-controls span:hover{
+	opacity: 1;
+}
+.pic-controls span:active{
+	box-shadow: 1px 1px 5px 2px #353434;	
+}
+#m-path-photo{
+    max-width: 100%;
+    font-size: 0.7em;
+    margin: 0px;
+    font-family: Verdana, sans-serif;
+}
+.point #show-picture{
+	color: rgba(25, 62, 148, 0.7);
+	cursor: pointer;
+}
+.point #show-picture:hover{
+    color: rgb(25, 62, 148);
+}
+.point #show-picture:hover i{
+	text-decoration: underline;
+}
+.point #show-picture:before{
+    font-size: 1.5em;
+    margin-right: 5px;
+}
+.point #show-picture i{
+    font-style: normal;
+    font-family: Verdana, sans-serif;
+    font-size: 1.1em;	
+}
+.blockout{
+    position: relative;
+    background-color: rgba(0,0,0,0.6);
+    width: 728px;
+    height: 384px;
+    color: rgb(142, 140, 139);
+    text-align: center;
+    font-size: 2em;
+    margin-top: -392px;
+}
+.blockout span{
+	margin-top: 20%;
 }
