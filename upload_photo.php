@@ -1,10 +1,10 @@
-﻿<?
+﻿<?php
 require_once( $_SERVER['DOCUMENT_ROOT'].'/wp-load.php' );
-?>
-<?
+
 if (!file_exists(ABSPATH .'/wp-content/uploads/pictures/')) {
     mkdir(ABSPATH .'/wp-content/uploads/pictures/', 0755, true);
 }
+
 foreach($_FILES as $file) {
 	if ($file['error'] === 0) {
 		if (is_uploaded_file($file['tmp_name'])) {
