@@ -175,7 +175,7 @@
     var that = $('.point-edit form');    
     if($('input').is('#m-path-photo')){
       var files = that[0][8].files;
-      var fData = new FormData(that);
+      var fData = new FormData();
       if(files.length > 0){
         $.each( files, function( key, value ){ fData.append( key, value ); });            
       } 
@@ -205,7 +205,7 @@
       $('#fmap').after($('<div />').addClass('point-pic'));
       $('.point-pic').addClass('show_photo_wrap');
       $('.point-pic').html('<p>'+ data +'</p>').prepend($('<a />').attr('href', '#').addClass('close').addClass('fa').addClass('fa-times-circle')).fadeIn();
-      var  targetTop = $('.point-pic').offset().top;
+      var  targetTop = $('.point-pic').offset().top - 100;
       $('html, body').animate({scrollTop:targetTop}, 'slow');
     });
   }
