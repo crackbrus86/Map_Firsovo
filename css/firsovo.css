@@ -4,13 +4,13 @@
 
 .point,
 .point-edit,
-.point-pic { position:absolute; display:none; padding:10px 15px; background: rgba(255, 255, 255, 0.8); box-shadow: 3px 3px 10px 0px #1d1c1c; color: #585858; font-size:14px; font-weight:bold; -moz-border-radius:8px; -webkit-border-radius:8px; border-radius:8px; }
+.point-pic { position:absolute; display:none; padding:10px 15px; background: rgba(255, 255, 255, 0.9); box-shadow: 3px 3px 10px 0px #1d1c1c; color: #585858; font-size:14px; font-weight:bold; -moz-border-radius:8px; -webkit-border-radius:8px; border-radius:8px; }
 
 .point-edit{ min-width: 225px; }   
 
 .point .fa-times-circle,
 .point-edit .fa-times-circle,
-.point-pic .fa-times-circle{ display: block; position: absolute; top: 3px; right: -9px; width: 24px; height: 24px; color: rgba(255,18,18,0.5); text-decoration: none; border: none; box-shadow: none; }
+.point-pic .fa-times-circle{ display: block; position: absolute; top: 3px; right: -9px; width: 24px; height: 24px; color: rgba(255,18,18,0.5); text-decoration: none; border: none; box-shadow: none; opacity: 1;}
 
 .point .fa-times-circle:hover,
 .point-edit .fa-times-circle:hover,
@@ -21,10 +21,10 @@
 .point-edit form p label{ font-family: Verdana, Helvetica, sans-serif; font-size: 1em; font-weight: 400; color: #585858; }
 .point-edit form p input[type="text"]{ width: 100%; padding: 0.625em 0.4375em; background-color: #fff; border: 1px solid #ddd; border-radius: 8px; -moz-border-radius: 8px; -webkit-border-radius: 8px; font-family: Verdana, Helvetica, sans-serif; font-size: 0.9em; font-weight: 400; color: #585858; }
 
-.point-edit form p select{ width: 100%; height: 2.4375rem; padding: .5rem; margin: 0 0 1rem; font-family: Verdana, Helvetica, sans-serif; font-size: 0.9em; font-weight: 400; line-height: normal; color: #585858; background-color: #fefefe; -moz-border-radius:8px; -webkit-border-radius:8px; border-radius: 8px; -webkit-appearance: none; -moz-appearance: none; background-image: url('../images/arrow.png'); background-size: 15px 10px; background-position: right center; background-origin: content-box; background-repeat: no-repeat; border-color: #ddd; }
+.point-edit form p select{ width: 100%; padding: .5rem; margin: 0 0 1rem; font-family: Verdana, Helvetica, sans-serif; font-size: 0.9em; font-weight: 400; line-height: normal; color: #585858; background-color: #fefefe; -moz-border-radius:8px; -webkit-border-radius:8px; border-radius: 8px; -webkit-appearance: none; -moz-appearance: none; background-image: url('../images/arrow.png'); background-size: 15px 10px; background-position: right center; background-origin: content-box; background-repeat: no-repeat; border-color: #ddd; }
 
 .point-edit .path-save,
-.point-edit .path-cancel{ display: block; font-size: 1.8em; color: #ffffff; border: 2px solid #ffffff; border-radius: 50%; -moz-border-radius: 50%; -webkit-border-radius: 50%; width: 40px; height: 40px; padding: 5px 0 0 9px; margin: 0 14%; text-shadow: 0px 0px 1px #000; box-shadow: 0 0 5px 0px #000; background-color: rgba(10, 142, 38, 1); opacity: 0.5; cursor: pointer; float: left; transition: all 0.5s ease 0s; }
+.point-edit .path-cancel{ display: block; font-size: 2.5em; color: #ffffff; border: 2px solid #ffffff; border-radius: 50%; -moz-border-radius: 50%; -webkit-border-radius: 50%; width: 40px; height: 40px; padding: 5px 0 0 9px; margin: 0 14%; text-shadow: 0px 0px 1px #000; box-shadow: 0 0 5px 0px #000; background-color: rgba(10, 142, 38, 1); opacity: 0.6; cursor: pointer; float: left; transition: all 0.5s ease 0s; }
 .point-edit .path-cancel{ background-color: rgb(241, 90, 90); }
 
 .point-edit .path-save:hover,
@@ -37,9 +37,13 @@
 .point .path-status,
 .point-pic .path-status{ text-align: center; font-size: 1.2em; text-transform: uppercase; }
 .point .cn-pre{ border-bottom: 1px solid #585858; }
-.show_photo_wrap{ width: 86.666667%; padding: 15px; padding-left: 8px; margin-top: -50%; z-index: 20; }
+.show_photo_wrap{ padding: 15px; padding-left: 8px; margin-top: -30%; z-index: 20; }
+.point .path-square span{ font-weight: 600; }
+.point .path-cost span{ font-weight: 600; color: #c70404; }
+.point .cn-pre,
+.point .path-cn{ font-size: 0.8em; text-align: left; }
 
-.pic-controls span{ display: block; float: left; border: 1px solid #6d6666; margin: 0 3px; padding: 4px; border-radius: 8px; -moz-border-radius: 8px; -webkit-border-radius: 8px; min-width: 45%; margin-bottom: 10px; background: linear-gradient(0deg,#d80e0e 0% ,#fdf2f2 100%); color: #fff; text-shadow: 0 0 1px #000; box-shadow: 1px 2px 5px -1px #353434; font-size: 1em; cursor: pointer; opacity: 0.7; transition: all 1s ease 0s; }
+.pic-controls span{ display: block; float: left; border: 1px solid #6d6666; margin: 0 3px; padding: 4px; border-radius: 8px; -moz-border-radius: 8px; -webkit-border-radius: 8px; min-width: 43%; margin-bottom: 10px; background: linear-gradient(0deg,#d80e0e 0% ,#fdf2f2 100%); color: #fff; text-shadow: 0 0 1px #000; box-shadow: 1px 2px 5px -1px #353434; font-size: 1em; cursor: pointer; opacity: 0.7; transition: all 1s ease 0s; }
 .pic-controls span i{ font-style: normal; font-family: Verdana, Helvetica, sans-serif; font-size: 0.95em; }
 .pic-controls .fa-trash:before,
 .pic-controls .fa-file-image-o:before{ margin-right: 6px; }

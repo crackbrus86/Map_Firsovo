@@ -25,24 +25,24 @@
           function(){ var a = paths[this.id].element_status; this.animate({ fill: SetAttributes(a).fill }, 300); })
 
         //show tool type with title
-        obj.mouseover(function(){
+        obj.mouseover(function(e){
           var point = this.getBBox(0);
           $('#fmap').next('.point').remove();
           $('#fmap').after($('<div />').addClass('point'));
           $('.point').html(paths[this.id].element_name)
-            .css({ left: point.x, top: point.y + 70, width: 100, height: 'auto', padding: 0, 'border-radius': 0, 'font-size': 12, 'text-align': 'center' })
+            .css({ left: e.pageX - 50, top: e.pageY - 35, width: 100, height: 'auto', padding: 0, 'border-radius': 0, 'font-size': 12, 'text-align': 'center' })
             .fadeIn();            
         })
 
         //show modal with info about area
-        obj.click(function(){
+        obj.click(function(e){
           var point = this.getBBox(0);
           $('#fmap').next('.point').remove();
           $('#fmap').after($('<div />').addClass('point'));
           $('.point').html('<p class="path-title">'+paths[this.id].element_name+'</p>')
             .prepend($('<a />').attr('href', '#').addClass('close').addClass('fa').addClass('fa-times-circle'))
-            .append(checkStatus(paths[this.id].element_status)).append(checkSquare(paths[this.id].element_place)).append(checkCadasterNumber(paths[this.id].element_cadaster_number)).append(HasPhoto(paths[this.id].element_photo))
-            .css({ left: point.x, top: point.y + 80 }).fadeIn();
+            .append(checkStatus(paths[this.id].element_status)).append(checkSquare(paths[this.id].element_place)).append(checkPrice(paths[this.id].element_price)).append(checkCadasterNumber(paths[this.id].element_cadaster_number)).append(HasPhoto(paths[this.id].element_photo))
+            .css({ left: e.pageX - 60, top: e.pageY - 30 }).fadeIn();
         });
 
         //close modal
@@ -69,22 +69,22 @@
   function SetAttributes(status){
     switch (status){
       case 'none':
-        attributes = { fill: 'rgba(95, 95, 95, 0.7)', stroke: '#647b4f', 'stroke-width': 1, 'stroke-linejoin': 'round' };
+        attributes = { fill: 'rgba(95, 95, 95, 0.9)', stroke: '#647b4f', 'stroke-width': 1, 'stroke-linejoin': 'round' };
         break
       case 'free':
-        attributes = { fill: 'rgba(131, 212, 122, 0.4)', stroke: '#3899E6', 'stroke-width': 1, 'stroke-linejoin': 'round' };
+        attributes = { fill: 'rgba(78, 222, 62, 0.9)', stroke: '#3899E6', 'stroke-width': 1, 'stroke-linejoin': 'round' };
         break
       case 'reserved':
-        attributes = { fill: 'rgba(247, 62, 253, 0.4)', stroke: '#3899E6', 'stroke-width': 1, 'stroke-linejoin': 'round' };
+        attributes = { fill: 'rgba(247, 62, 253, 0.8)', stroke: '#3899E6', 'stroke-width': 1, 'stroke-linejoin': 'round' };
         break        
       case 'busy':
-        attributes = { fill: 'rgba(239, 113, 0, 0.4)', stroke: '#3899E6', 'stroke-width': 1, 'stroke-linejoin': 'round' };
+        attributes = { fill: 'rgba(239, 113, 0, 0.8)', stroke: '#3899E6', 'stroke-width': 1, 'stroke-linejoin': 'round' };
         break    
       case 'discount':
-        attributes = { fill: 'rgba(249, 0, 0, 0.4)', stroke: '#3899E6', 'stroke-width': 1, 'stroke-linejoin': 'round' };
+        attributes = { fill: 'rgba(249, 0, 0, 0.7)', stroke: '#3899E6', 'stroke-width': 1, 'stroke-linejoin': 'round' };
         break                
       default:
-        attributes = { fill: 'rgba(95, 95, 95, 0.7)', stroke: '#647b4f', 'stroke-width': 1, 'stroke-linejoin': 'round' };
+        attributes = { fill: 'rgba(95, 95, 95, 0.9)', stroke: '#647b4f', 'stroke-width': 1, 'stroke-linejoin': 'round' };
         break             
     }
     return attributes;
@@ -136,7 +136,7 @@
 
   //Get square for current path
   function checkSquare(square){
-    var str = '<p class="path-square">Площадь '+square+'</p>';
+    var str = '<p class="path-square">Площадь <span>'+square+'</span></p>';
     if(square > 0 || square !== '') return str;
   }
 
@@ -144,6 +144,11 @@
   function checkCadasterNumber(cadaster_number){
     var str = '<p class="cn-pre">Смотреть на кадастровой карте</p><p class="path-cn">'+cadaster_number+'</p>';
     if(cadaster_number !== '') return str;
+  }
+
+  function checkPrice(price){
+  	var str = '<p class="path-cost">Цена <span>' + price + '</span></p>'
+  	if(price !== '') return str; 
   }
 
   //close modal with special button
@@ -259,8 +264,8 @@
             //load data about current path to the modal 'edit'
             $.get(dir + "/get_path.php", "euid=" + target, function(dat){
               var pathData = $.parseJSON(dat);
-              var leftX = event.offsetX - 20;
-              var topY = event.offsetY + 30;
+              var leftX = event.pageX - 100;
+              var topY = event.pageY - 60;
               $('.point-edit').remove();
               $('.point').remove();
               $('#fmap').after($('<div />').addClass('point-edit'));
