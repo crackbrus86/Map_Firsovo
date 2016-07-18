@@ -2,7 +2,7 @@
 /*
 Plugin Name: Map for the camp Firsovo
 Description: Interactive map for the camp Firsovo
-Version: 1.0
+Version: 2.0
 Author: Salivon Eugene
 */
 
